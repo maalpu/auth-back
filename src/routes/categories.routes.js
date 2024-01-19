@@ -9,7 +9,7 @@ router.get('/categories', getCategories)
 
 router.post('/categories', createCategory)
 
-router.put('/categories/:id', updateCategory)
+router.patch('/categories/:id', updateCategory)
 
 router.delete('/categories/:id', deleteCategory)
 

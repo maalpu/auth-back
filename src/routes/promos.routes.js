@@ -9,7 +9,7 @@ router.get('/promos', getPromos)
 
 router.post('/promos', createPromo)
 
-router.put('/promos/:id', updatePromo)
+router.patch('/promos/:id', updatePromo)
 
 router.delete('/promos/:id', deletePromo)
 
