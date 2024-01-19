@@ -24,3 +24,4 @@ dist-ssr
 *.sw?
 .env
 instalar.md
+modelo.json
