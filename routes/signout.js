@@ -1,7 +1,15 @@
-const router = require('express').Router()
+import express from 'express'
+
+export const router = express.Router()
 
 router.get("/", (req, res) => {
   res.send("signout")
 })
 
-module.exports = router
+// const router = require('express').Router()
+
+// router.get("/", (req, res) => {
+//   res.send("signout")
+// })
+
+// module.exports = router

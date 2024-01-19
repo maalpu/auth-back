@@ -1,8 +1,10 @@
-const Mongoose = require("mongoose")
+import mysql2 from 'mysql2'
 
-const TokenSchema = new Mongoose.Schema({
-  id: { type: Object },
-  token: { type: String, required: true },
-})
+// const Mongoose = require("mongoose")
 
-module.exports = Mongoose.model("Token", TokenSchema)
+// const TokenSchema = new Mongoose.Schema({
+//   id: { type: Object },
+//   token: { type: String, required: true },
+// })
+
+// module.exports = Mongoose.model("Token", TokenSchema)

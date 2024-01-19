@@ -1,56 +1,63 @@
-const Mongoose = require("mongoose")
-const bcrypt = require("bcrypt")
-const { generateAccessToken, generateRefreshToken } = require("../auth/generateTokens")
-const getUserInfo = require("../lib/getUserInfo")
-const Token = require("../schemas/token")
+import mysql2 from 'mysql2'
+import bcrypt from 'bcrypt'
+import { generateAccessToken, generateRefreshToken } from '../auth/generateTokens.js'
+import getUserInfo from '../auth/getUserInfo.js'
+import Token from '../schemas/token.js'
 
-const UserSchema = new Mongoose.Schema({
-  id: { type: Object},
-  name: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-  pass: { type: String, required: true },
-})
 
-UserSchema.pre("save", function (next) {
-  if (this.isModified("pass") || this.isNew) {
-    const document = this
+// const Mongoose = require("mongoose")
+// const bcrypt = require("bcrypt")
+// const { generateAccessToken, generateRefreshToken } = require("../auth/generateTokens")
+// const getUserInfo = require("../lib/getUserInfo")
+// const Token = require("../schemas/token")
 
-    bcrypt.hash(document.pass, 10, (err, hash) => {
-      if (err) {
-        next(err)
-      } else {
-        document.pass = hash
-        next()
-      }
-    })
-  } else {
-    next()
-  }
-})
+// const UserSchema = new Mongoose.Schema({
+//   id: { type: Object},
+//   name: { type: String, required: true },
+//   email: { type: String, required: true, unique: true },
+//   pass: { type: String, required: true },
+// })
 
-UserSchema.methods.emailExists = async function (email) {
-  const result = await Mongoose.model("User").find({ email })
-  return result.length > 0
-}
+// UserSchema.pre("save", function (next) {
+//   if (this.isModified("pass") || this.isNew) {
+//     const document = this
 
-UserSchema.methods.comparePassword = async function (pass, hash) {
-  const same = await bcrypt.compare(pass, hash)
-  return same
-}
+//     bcrypt.hash(document.pass, 10, (err, hash) => {
+//       if (err) {
+//         next(err)
+//       } else {
+//         document.pass = hash
+//         next()
+//       }
+//     })
+//   } else {
+//     next()
+//   }
+// })
 
-UserSchema.methods.createAccessToken = async function () {
-  return generateAccessToken(getUserInfo(this))
-}
+// UserSchema.methods.emailExists = async function (email) {
+//   const result = await Mongoose.model("User").find({ email })
+//   return result.length > 0
+// }
 
-UserSchema.methods.createRefreshToken = async function () {
-  const refreshToken = generateRefreshToken(getUserInfo(this))
-  try {
-    await new Token({token: refreshToken}).save()
-    return refreshToken
+// UserSchema.methods.comparePassword = async function (pass, hash) {
+//   const same = await bcrypt.compare(pass, hash)
+//   return same
+// }
 
-  } catch (error) {
-    console.log(error)
-  }
-}
+// UserSchema.methods.createAccessToken = async function () {
+//   return generateAccessToken(getUserInfo(this))
+// }
 
-module.exports = Mongoose.model("User", UserSchema)
+// UserSchema.methods.createRefreshToken = async function () {
+//   const refreshToken = generateRefreshToken(getUserInfo(this))
+//   try {
+//     await new Token({token: refreshToken}).save()
+//     return refreshToken
+
+//   } catch (error) {
+//     console.log(error)
+//   }
+// }
+
+// module.exports = Mongoose.model("User", UserSchema)
